@@ -97,6 +97,7 @@ def insert_product_data(product_data):
                 manual['type']
             ))
             
+        # Insertion des données url 
         url_data = product_data.get('url')
         cursor.execute("""
             INSERT INTO URL (ProductID, SeoId, SeoText, ShareableUrl)
@@ -113,19 +114,20 @@ def insert_product_data(product_data):
         return True  # Indique la réussite de l'insertion
 
     except KeyError as e:
-        
+        print(f"Clé manquante: {e}")
         # Retourne False pour indiquer un échec et la nécessité de continuer
         return False
     except Exception as e:
-        
         conn.rollback()
+        print(f"Une erreur inattendue est survenue: {e}")
         # Retourne False pour indiquer un échec et la nécessité de continuer
         return False
 
-# Charger les données JSON à partir d'un fichier
+# Charger les données JSON à partir du fichier des produits
 with open('data/json/data.json', 'r') as file:
     data = json.load(file)
 
+# Connexion à la base de donnée
 with sqlite3.connect('data/db/casto.db') as conn:
     cursor = conn.cursor()
     
@@ -135,4 +137,4 @@ with sqlite3.connect('data/db/casto.db') as conn:
         if not success:
             continue
     
-    # Le context manager s'occupera de fermer la connexion pour vous.
+    # Le context manager with s'occupera de fermer la connexion.

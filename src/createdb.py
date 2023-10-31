@@ -1,10 +1,10 @@
 import sqlite3
 
-# Connect to SQLite database (or create it if it doesn't exist)
+# Connexion à la base ou création si elle n'existe pas
 conn = sqlite3.connect('data/db/casto.db')
 cursor = conn.cursor()
 
-# Create tables
+# Création des tables 
 cursor.executescript("""
 -- Product Table
 CREATE TABLE IF NOT EXISTS Product (
@@ -99,6 +99,6 @@ CREATE TABLE IF NOT EXISTS Manual (
 );                   
 """)
 
-# Commit changes and close the connection
+# Commit et fermeture de la connexion 
 conn.commit()
 conn.close()
